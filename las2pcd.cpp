@@ -31,7 +31,7 @@ int main (int argc, char *argv[])
     std::cerr << "INFO : Loading : " << filePath << std::endl;
     
     // instancing a new PCL pointcloud object
-    pcl::PointCloud<pcl::PointXYZRGB> cloud;
+    pcl::PointCloud<pcl::PointXYZ> cloud;
 
     // Opening  the las file
     std::ifstream ifs(filePath.c_str(), std::ios::in | std::ios::binary);
@@ -56,9 +56,11 @@ int main (int argc, char *argv[])
 	cout << "INFO : " << cloud.points.size () << " points detected in " << filePath << endl;
 
 	int i=0;				// counter
-	uint16_t r1, g1, b1;	// RGB variables for .las (16-bit coded)
-	int r2, g2, b2;			// RGB variables for converted values (see below)
-	uint32_t rgb;			// "packed" RGB value for .pcd
+	// uint16_t r1, g1, b1;	// RGB variables for .las (16-bit coded)
+	// int r2, g2, b2;			// RGB variables for converted values (see below)
+	// uint32_t rgb;			// "packed" RGB value for .pcd
+
+	std::cerr << "Reading las file... "  << std::endl;
 
 	while(reader.ReadNextPoint()) 
 	{
@@ -68,23 +70,25 @@ int main (int argc, char *argv[])
 	    cloud.points[i].z = (reader.GetPoint().GetZ());
 				
 		// get RGB information. Note: in liblas, the "Color" class can be accessed from within the "Point" class, thus the triple gets
-		r1 = (reader.GetPoint().GetColor().GetRed());
-		g1 = (reader.GetPoint().GetColor().GetGreen());
-		b1 = (reader.GetPoint().GetColor().GetBlue());
+		// r1 = (reader.GetPoint().GetColor().GetRed());
+		// g1 = (reader.GetPoint().GetColor().GetGreen());
+		// b1 = (reader.GetPoint().GetColor().GetBlue());
 
 		// .las stores RGB color in 16-bit (0-65535) while .pcd demands an 8-bit value (0-255). Let's convert them!
-		r2 = ceil(((float)r1/65536)*(float)256);
-		g2 = ceil(((float)g1/65536)*(float)256);
-		b2 = ceil(((float)b1/65536)*(float)256);
+		// r2 = ceil(((float)r1/65536)*(float)256);
+		// g2 = ceil(((float)g1/65536)*(float)256);
+		// b2 = ceil(((float)b1/65536)*(float)256);
 
 		// PCL particularity: must "pack" the RGB into one single integer and then reinterpret them as float
-		rgb = ((int)r2) << 16 | ((int)g2) << 8 | ((int)b2);
+		// rgb = ((int)r2) << 16 | ((int)g2) << 8 | ((int)b2);
 
 		// cloud.points[i].rgb = *reinterpret_cast<float*>(&rgb);
 					
 		i++; // ...moving on
 	}
   
+	std::cerr << "Finished loading files... "  << std::endl;
+
 	// Allows output file to be set:
 	// pcl::io::savePCDFileASCII (argv[2], cloud);
 
