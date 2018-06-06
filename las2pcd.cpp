@@ -94,7 +94,7 @@ int main (int argc, char *argv[])
 
 	// New version:
 	pcl::PCDWriter writer;
-	writer.write(argv[2],cloud,true);
+	writer.write(argv[2],cloud,false);
   
 	std::cerr << "Saved " << cloud.points.size () << " data points to " << argv[2] << std::endl;
 
