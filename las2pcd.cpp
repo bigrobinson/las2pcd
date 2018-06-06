@@ -12,12 +12,12 @@ int main (int argc, char *argv[])
 	string filePath;
 	cout << "===================================================================" << endl;
 	cout << "LAS2PCD - Converts .las point clouds into PCL-friendly format .pcd" << endl;
-	cout << "ver 0.41 - 6 June 2018" << endl;
+	cout << "ver 0.42 - 6 June 2018" << endl;
 	cout << "(c) Arnadi Murtiyoso" << endl;
 	cout << "PAGE Group, ICube Laboratory UMR 7357 INSA Strasbourg" << endl;
 	cout << "contact: arnadi.murtiyoso@insa-strasbourg.fr" << endl;
 	cout << "https://github.com/murtiad" << endl;
-	cout << "Ubuntu tweaks by Jonathan Greenberg, jgreenberg@unr.edu" << endl;
+	cout << "Updates by Jonathan Greenberg, jgreenberg@unr.edu" << endl;
 	cout << "Ubuntu version: https://github.com/gearslaboratory/las2pcd" << endl;
 	cout << "===================================================================" << endl;
 	cout << endl;
@@ -60,7 +60,7 @@ int main (int argc, char *argv[])
 	// int r2, g2, b2;			// RGB variables for converted values (see below)
 	// uint32_t rgb;			// "packed" RGB value for .pcd
 
-	std::cerr << "Reading las file... "  << std::endl;
+	std::cerr << "Loading las file... "  << std::endl;
 
 	while(reader.ReadNextPoint()) 
 	{
@@ -87,14 +87,15 @@ int main (int argc, char *argv[])
 		i++; // ...moving on
 	}
   
-	std::cerr << "Finished loading files... "  << std::endl;
+	std::cerr << "Finished loading LAS file and creating cloud... "  << std::endl;
 
 	// Allows output file to be set:
 	// pcl::io::savePCDFileASCII (argv[2], cloud);
 
 	// New version:
 	pcl::PCDWriter writer;
-	writer.write(argv[2],cloud,false);
+	std::cerr << "Saving PCD file... "  << std::endl;
+	writer.writeASCII(argv[2],cloud,32);
   
 	std::cerr << "Saved " << cloud.points.size () << " data points to " << argv[2] << std::endl;
 
