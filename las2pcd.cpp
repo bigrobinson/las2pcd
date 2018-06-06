@@ -70,7 +70,7 @@ int main (int argc, char *argv[])
 		// get RGB information. Note: in liblas, the "Color" class can be accessed from within the "Point" class, thus the triple gets
 		r1 = (reader.GetPoint().GetColor().GetRed());
 		g1 = (reader.GetPoint().GetColor().GetGreen());
-		b1 = (reader.GetPoint().GetColor().GetBlue()); 
+		b1 = (reader.GetPoint().GetColor().GetBlue());
 
 		// .las stores RGB color in 16-bit (0-65535) while .pcd demands an 8-bit value (0-255). Let's convert them!
 		r2 = ceil(((float)r1/65536)*(float)256);
@@ -80,15 +80,19 @@ int main (int argc, char *argv[])
 		// PCL particularity: must "pack" the RGB into one single integer and then reinterpret them as float
 		rgb = ((int)r2) << 16 | ((int)g2) << 8 | ((int)b2);
 
-		cloud.points[i].rgb = *reinterpret_cast<float*>(&rgb);
+		// cloud.points[i].rgb = *reinterpret_cast<float*>(&rgb);
 					
 		i++; // ...moving on
 	}
   
 	// Allows output file to be set:
-	pcl::io::savePCDFileASCII (argv[2], cloud);
+	// pcl::io::savePCDFileASCII (argv[2], cloud);
+
+	// New version:
+	pcl::PCDWriter writer;
+	writer.write(argv[2],cloud,true);
   
-	std::cerr << "Saved " << cloud.points.size () << " data points to pointcloud.pcd." << std::endl;
+	std::cerr << "Saved " << cloud.points.size () << " data points to " << argv[2] << std::endl;
 
 	return (0);
 }
