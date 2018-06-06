@@ -12,7 +12,7 @@ int main (int argc, char *argv[])
 	string filePath;
 	cout << "===================================================================" << endl;
 	cout << "LAS2PCD - Converts .las point clouds into PCL-friendly format .pcd" << endl;
-	cout << "ver 0.40 - 6 June 2018" << endl;
+	cout << "ver 0.41 - 6 June 2018" << endl;
 	cout << "(c) Arnadi Murtiyoso" << endl;
 	cout << "PAGE Group, ICube Laboratory UMR 7357 INSA Strasbourg" << endl;
 	cout << "contact: arnadi.murtiyoso@insa-strasbourg.fr" << endl;
