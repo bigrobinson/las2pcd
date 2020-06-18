@@ -12,9 +12,10 @@ add_definitions(${PCL_DEFINITIONS})
 
 add_executable(las2pcd las2pcd.cpp)
 
-target_link_libraries(las2pcd 
+target_link_libraries(las2pcd
 ${PCL_COMMON_LIBRARIES}
 ${PCL_IO_LIBRARIES}
 /usr/lib/liblas.so
 /usr/lib/liblas_c.so
+/usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1
 )
